@@ -8,7 +8,7 @@ import secrets, json
 import uvicorn
 
 app_config = Settings()
-pz = PZServer(config_path="pz_config.json")
+pz = PZServer(app_config)
 app = FastAPI()
 security = HTTPBasic()
 
@@ -76,6 +76,6 @@ def start_server():
         log_level="debug",
         reload=True,
     )
-    
+
 if __name__ == "__main__":
     start_server()
