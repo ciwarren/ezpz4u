@@ -44,7 +44,7 @@ class PZServer():
             fh.writelines(config_contents)
 
     def proxy_server_commands(self, action):
-        stdout = os.system([self.settings.server_management_path, action])
+        stdout = os.system(self.settings.server_management_path + " " + action)
         return stdout
 
     def start_server(self):
