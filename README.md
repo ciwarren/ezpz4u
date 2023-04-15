@@ -32,7 +32,7 @@ After=syslog.target network.target nss-lookup.target network-online.target
 
 [Service]
 ExecStart= /bin/bash -c "source /home/steam/.venv/pz/bin/activate && ezpz4u"
-User=steam
+User=root
 StandardOutput=journal
 Restart=on-failure
 [Install]
