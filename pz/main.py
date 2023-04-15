@@ -5,6 +5,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 import secrets, json
+import uvicorn
 
 app_config = Settings()
 pz = PZServer(config_path="pz_config.json")
@@ -65,3 +66,16 @@ async def update_server(username: Annotated[str, Depends(get_current_username)])
 @app.get("/server/stats")
 async def get_stats():
     return pz.get_stats_server()    
+
+
+def start_server():
+    uvicorn.run(
+        "app",
+        host=app_config.host,
+        port=app_config.port,
+        log_level="debug",
+        reload=True,
+    )
+    
+if __name__ == "__main__":
+    start_server()
