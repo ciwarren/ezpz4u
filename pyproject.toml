@@ -11,4 +11,4 @@ dependencies = [
     'importlib-metadata; python_version<"3.10"',
 ]
 [project.scripts]
-pz_web = "mypkg.mymodule:some_func"
+pz_web = "uvicorn main:app"
