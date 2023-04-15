@@ -1,7 +1,5 @@
 [project]
 name = "ezpz4u"
-long_description = "A project zomboid rest api for easily managing mods and state"
-long_description_content_type = "text"
 version = "0.0.1"
 dependencies = [
     "requests",
