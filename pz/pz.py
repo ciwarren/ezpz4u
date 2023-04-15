@@ -1,4 +1,4 @@
-import requests, re, os, json
+import requests, re, subprocess, json
 from .config import Settings
 # Uses pzlsm for server management: https://github.com/openzomboid/pzlsm
 
@@ -44,30 +44,37 @@ class PZServer():
             fh.writelines(config_contents)
 
     def proxy_server_commands(self, action):
-        stdout = os.system(self.settings.server_management_path + " " + action)
+        stdout = subprocess.Popen([self.settings.server_management_path, action], stdout=subprocess.PIPE).communicate()[0]
         return stdout
 
     def start_server(self):
-        return self.proxy_server_commands("start")
+        self.proxy_server_commands("start")
+        return self.get_stats_server()
     
     def stop_server(self):
-        return self.proxy_server_commands("stop")
+        self.proxy_server_commands("stop now")
+        return self.get_stats_server()
     
     def restart_server(self):
-        return self.proxy_server_commands("restart")
-
+        self.proxy_server_commands("restart now")
+        return self.get_stats_server()
     def update_server(self):
-        return self.proxy_server_commands("update")
-
+        self.proxy_server_commands("update")
+        return self.get_stats_server()
+    
+    def get_stats_server(self):
+        return self.proxy_server_commands("stats")
 
     def update_server_mods(self):
         self.fetch_mod_list()
         self.stop_server()
         self.update_mods_ini()
-        return self.start_server()
+        self.start_server()
+        return self.get_stats_server()
 
     def update_server(self):
         self.stop_server()
         self.update_server()
-        return self.start_server()
+        self.start_server()
+        return self.get_stats_server()
 
