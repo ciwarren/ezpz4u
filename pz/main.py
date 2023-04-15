@@ -1,7 +1,7 @@
 from .pz import PZServer
 from .config import Settings
 from typing import Annotated
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status, Response
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 import secrets, json
@@ -41,31 +41,35 @@ def read_current_user(username: Annotated[str, Depends(get_current_username)]):
 @app.get("/server/stop_server")
 def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        return {"output": pz.stop_server()}
-
+        status = pz.stop_server()
+        return Response(content=status, media_type="PlainTextResponse")
 @app.get("/server/start_server")
 def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        return {"output": pz.start_server()}
+        status = pz.start_server()
+        return Response(content=status, media_type="PlainTextResponse")
 
 @app.get("/server/restart_server")
 def restart_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        return {"output": pz.restart_server()}
+        status = pz.restart_server()
+        return Response(content=status, media_type="PlainTextResponse")
 
 @app.get("/server/update_mods")
 def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        return {"output": pz.update_server_mods()}
-
+        status = pz.update_server_mods()
+        return Response(content=status, media_type="PlainTextResponse")
 @app.get("/server/update_server")
 def update_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        return {"output":pz.update_server()}
+        status = pz.update_server()
+        return Response(content=status, media_type="PlainTextResponse")
 
 @app.get("/server/stats")
 def get_stats():
-    return {"output": pz.get_stats_server()}    
+    status = pz.get_stats_server()
+    return Response(content=status, media_type="PlainTextResponse")
 
 
 def start_server():
