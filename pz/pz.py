@@ -44,7 +44,7 @@ class PZServer():
             fh.writelines(config_contents)
 
     def proxy_server_commands(self, action):
-        stdout = subprocess.Popen([self.settings.server_management_path, action], stdout=subprocess.PIPE).communicate()[0]
+        stdout = subprocess.Popen([self.settings.server_management_path, action], stdout=subprocess.PIPE).communicate()[0].decode()
         return stdout
 
     def start_server(self):
