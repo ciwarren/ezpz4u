@@ -1,5 +1,5 @@
 [project]
-name = "web-ezpz"
+name = "ezpz4u"
 version = "0.0.1"
 dependencies = [
     "requests",
