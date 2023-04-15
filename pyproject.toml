@@ -1,5 +1,5 @@
 [project]
-name = "ezpz"
+name = "ezpz4u"
 version = "0.0.1"
 dependencies = [
     "requests",
@@ -11,4 +11,4 @@ dependencies = [
     'importlib-metadata; python_version<"3.10"',
 ]
 [project.scripts]
-ezpz = "ezpz.main"
+ezpz4u = "ezpz.main:start_server"
