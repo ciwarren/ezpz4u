@@ -39,32 +39,32 @@ def read_current_user(username: Annotated[str, Depends(get_current_username)]):
     return {"username": username}
 
 @app.get("/server/stop_server")
-async def stop_server(username: Annotated[str, Depends(get_current_username)]):
+def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.stop_server()
 
 @app.get("/server/start_server")
-async def stop_server(username: Annotated[str, Depends(get_current_username)]):
+def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.start_server()
 
 @app.get("/server/restart_server")
-async def restart_server(username: Annotated[str, Depends(get_current_username)]):
+def restart_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.restart_server()
 
 @app.get("/server/update_mods")
-async def stop_server(username: Annotated[str, Depends(get_current_username)]):
+def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.update_server_mods()
 
 @app.get("/server/update_server")
-async def update_server(username: Annotated[str, Depends(get_current_username)]):
+def update_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.update_server()
 
 @app.get("/server/stats")
-async def get_stats():
+def get_stats():
     return pz.get_stats_server()    
 
 
