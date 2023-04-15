@@ -44,26 +44,23 @@ class PZServer():
             fh.writelines(config_contents)
 
     def proxy_server_commands(self, action):
-        stdout = subprocess.Popen([self.settings.server_management_path, action], stdout=subprocess.PIPE).communicate()[0].decode()
+        stdout = subprocess.Popen(action, stdout=subprocess.PIPE).communicate()[0].decode()
         return stdout
 
     def start_server(self):
-        self.proxy_server_commands("start")
+        self.proxy_server_commands(["sudo", "systemctl", "start", "pz"])
         return self.get_stats_server()
     
     def stop_server(self):
-        self.proxy_server_commands("stop now")
+        self.proxy_server_commands(["sudo", "systemctl", "stop", "pz"])
         return self.get_stats_server()
     
     def restart_server(self):
-        self.proxy_server_commands("restart now")
+        self.proxy_server_commands(["sudo", "systemctl", "restart", "pz"])
         return self.get_stats_server()
-    def update_server(self):
-        self.proxy_server_commands("update")
-        return self.get_stats_server()
-    
+  
     def get_stats_server(self):
-        return self.proxy_server_commands("stats")
+        return self.proxy_server_commands(["journalctl", "-u", "-n", "100", "pz.service"])
 
     def update_server_mods(self):
         self.fetch_mod_list()

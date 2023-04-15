@@ -3,12 +3,6 @@ Welcome!
 This is a very quickly put together web manager that has some basic functionality. 
 
 
-Dependency !WARNING!:
-https://github.com/openzomboid/pzlsm
-
-This is used for executing the server actions, great project <3.
-
-
 Installation:
 
 ```
@@ -44,3 +38,27 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
+Zomboid systemd file
+```
+[Unit]
+Description=Project Zomboid Server
+After=network.target
+
+[Service]
+PrivateTmp=true
+Type=simple
+User=steam
+WorkingDirectory=/home/steam/pz
+ExecStartPre=/usr/games/steamcmd +force_install_dir "/home/steam/pz" +login anonymous +app_update 380870 validate +quit
+ExecStart=/bin/sh -c "exec /home/steam/pz/start-server.sh </home/steam/pz/zomboid.control"
+ExecStop=/bin/sh -c "echo save > /home/steam/pz/zomboid.control; sleep 15; echo quit > /home/steam/pz/zomboid.control"
+Sockets=zomboid.socket
+KillSignal=SIGCONT
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+Zomboid Socket 
