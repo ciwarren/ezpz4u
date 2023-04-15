@@ -1,5 +1,5 @@
 [project]
-name = "pz-manager"
+name = "ezpz"
 version = "0.0.1"
 dependencies = [
     "requests",
@@ -11,4 +11,4 @@ dependencies = [
     'importlib-metadata; python_version<"3.10"',
 ]
 [project.scripts]
-pz_web = "pz-manager.main"
+ezpz = "ezpz.main"
