@@ -1,0 +1,8 @@
+[project]
+name = "pz-manager"
+version = "0.0.1"
+dependencies = [
+    "requests",
+    "fastapi",
+    'importlib-metadata; python_version<"3.10"',
+]
