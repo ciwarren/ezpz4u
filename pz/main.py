@@ -1,7 +1,7 @@
 from .pz import PZServer
 from .config import Settings
 from typing import Annotated
-from fastapi import Depends, FastAPI, HTTPException, status, Response
+from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 import secrets, json
@@ -39,37 +39,33 @@ def read_current_user(username: Annotated[str, Depends(get_current_username)]):
     return {"username": username}
 
 @app.get("/server/stop_server")
-def stop_server(username: Annotated[str, Depends(get_current_username)]):
+async def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        status = pz.stop_server()
-        return Response(content=status, media_type="PlainTextResponse")
+        return pz.stop_server()
+
 @app.get("/server/start_server")
-def stop_server(username: Annotated[str, Depends(get_current_username)]):
+async def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        status = pz.start_server()
-        return Response(content=status, media_type="PlainTextResponse")
+        return pz.start_server()
 
 @app.get("/server/restart_server")
-def restart_server(username: Annotated[str, Depends(get_current_username)]):
+async def restart_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        status = pz.restart_server()
-        return Response(content=status, media_type="PlainTextResponse")
+        return pz.restart_server()
 
 @app.get("/server/update_mods")
-def stop_server(username: Annotated[str, Depends(get_current_username)]):
+async def stop_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        status = pz.update_server_mods()
-        return Response(content=status, media_type="PlainTextResponse")
+        return pz.update_server_mods()
+
 @app.get("/server/update_server")
-def update_server(username: Annotated[str, Depends(get_current_username)]):
+async def update_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
-        status = pz.update_server()
-        return Response(content=status, media_type="PlainTextResponse")
+        return pz.update_server()
 
 @app.get("/server/stats")
-def get_stats():
-    status = pz.get_stats_server()
-    return Response(content=status, media_type="PlainTextResponse")
+async def get_stats():
+    return pz.get_stats_server()    
 
 
 def start_server():
