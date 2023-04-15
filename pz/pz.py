@@ -45,7 +45,7 @@ class PZServer():
 
     def proxy_server_commands(self, action):
         stdout = subprocess.Popen([self.settings.server_management_path, action])
-        return stdout.read()
+        return stdout.decode()
 
     def start_server(self):
         self.proxy_server_commands("start")
