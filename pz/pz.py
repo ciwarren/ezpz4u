@@ -20,7 +20,7 @@ class PZServer():
         self.ids_string = ";".join(ids_list)
 
     def update_mods_ini(self):
-        with open(self.server_config_path, "r") as fh:
+        with open(self.settings.server_config_path, "r") as fh:
             config_contents = fh.readlines()
         
         line_num = 0
