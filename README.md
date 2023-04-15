@@ -39,10 +39,10 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-Zomboid systemd file
+pz systemd file
 ```
 [Unit]
-Description=Project Zomboid Server
+Description=Project pz Server
 After=network.target
 
 [Service]
@@ -51,9 +51,9 @@ Type=simple
 User=steam
 WorkingDirectory=/home/steam/pz
 ExecStartPre=/usr/games/steamcmd +force_install_dir "/home/steam/pz" +login anonymous +app_update 380870 validate +quit
-ExecStart=/bin/sh -c "exec /home/steam/pz/start-server.sh </home/steam/pz/zomboid.control"
-ExecStop=/bin/sh -c "echo save > /home/steam/pz/zomboid.control; sleep 15; echo quit > /home/steam/pz/zomboid.control"
-Sockets=zomboid.socket
+ExecStart=/bin/sh -c "exec /home/steam/pz/start-server.sh </home/steam/pz/pz.control"
+ExecStop=/bin/sh -c "echo save > /home/steam/pz/pz.control; sleep 15; echo quit > /home/steam/pz/pz.control"
+Sockets=pz.socket
 KillSignal=SIGCONT
 
 [Install]
@@ -61,4 +61,15 @@ WantedBy=multi-user.target
 
 ```
 
-Zomboid Socket 
+pz Socket 
+```
+[Unit]
+BindsTo=pz.service
+
+[Socket]
+ListenFIFO=/home/steam/pz/pz.control
+FileDescriptorName=control
+RemoveOnStop=true
+SocketMode=0660
+SocketUser=steam
+```
