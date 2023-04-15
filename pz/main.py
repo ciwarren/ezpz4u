@@ -75,6 +75,3 @@ def start_server():
         port=app_config.port,
         log_level="debug",
     )
-
-if __name__ == "__main__":
-    start_server()
