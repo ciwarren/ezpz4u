@@ -1,18 +1,13 @@
 import requests, re, subprocess, json
-
+from .config import Settings
 # Uses pzlsm for server management: https://github.com/openzomboid/pzlsm
 
-
-
 class PZServer():
-    def __init__(self, config_path):
-        self.config = json.load(config_path)
-        self.collection_id = self.get("collection_id")
-        self.server_management_path = self.get("server_management_path")
-        self.server_config_path = self.get("server_config_path")
+    def __init__(self, settings):
+        self.settings = settings
 
     def fetch_mod_list(self):
-        res = requests.get(f"https://steamcommunity.com/sharedfiles/filedetails/?id={self.collection_id}")
+        res = requests.get(f"https://steamcommunity.com/sharedfiles/filedetails/?id={self.settings.collection_id}")
         content = res.content.decode()
         results = set(re.findall(r'sharedfile_(\d*)', content))
         self.workshop_string = ";".join(results)
@@ -45,11 +40,11 @@ class PZServer():
 
             line_num += 1
 
-        with open(self.server_config_path, "w") as fh:
+        with open(self.settings.server_config_path, "w") as fh:
             fh.writelines(config_contents)
 
     def proxy_server_commands(self, action):
-        stdout = subprocess.Popen([self.server_management_path, action])
+        stdout = subprocess.Popen([self.settings.server_management_path, action])
         return stdout
 
     def start_server(self):

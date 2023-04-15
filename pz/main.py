@@ -1,11 +1,13 @@
-from pz import PZServer
+from .pz import PZServer
+from .config import Settings
 from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
 import secrets, json
 
+app_config = Settings()
 pz = PZServer(config_path="pz_config.json")
-app_config = json.load("api_config.json")
 app = FastAPI()
 security = HTTPBasic()
 
@@ -13,12 +15,12 @@ def get_current_username(
     credentials: Annotated[HTTPBasicCredentials, Depends(security)]
 ):
     current_username_bytes = credentials.username.encode("utf8")
-    correct_username_bytes = app_config.get("username").encode("utf8")
+    correct_username_bytes = app_config.username.encode("utf8")
     is_correct_username = secrets.compare_digest(
         current_username_bytes, correct_username_bytes
     )
     current_password_bytes = credentials.password.encode("utf8")
-    correct_password_bytes = app_config.get("password").encode("utf8")
+    correct_password_bytes = app_config.password.encode("utf8")
     is_correct_password = secrets.compare_digest(
         current_password_bytes, correct_password_bytes
     )
