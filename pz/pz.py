@@ -46,6 +46,11 @@ class PZServer():
         if not updated_mods:
             config_contents.append(f"Mods={self.ids_string} \n")
         
+
+        for line in config_contents:
+            if line == "WorkshopItems=" or line == "Mods=":
+                config_contents.remove(line)
+
         with open(self.settings.server_config_path, "w") as fh:
             fh.writelines(config_contents)
 
