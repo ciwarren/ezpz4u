@@ -29,8 +29,9 @@ class PZServer():
         for line in config_contents:
             
             if "WorkshopItems=" in line:
-                config_contents[line_num] = f"WorkshopItems={self.workshop_string} \n"
                 updated_workshop = True
+                config_contents[line_num] = f"WorkshopItems={self.workshop_string} \n"
+            
             if "Mods=" in line:
                 updated_mods = True
                 config_contents[line_num] = f"Mods={self.ids_string} \n"
@@ -40,6 +41,11 @@ class PZServer():
 
             line_num += 1
 
+        if not updated_workshop:
+            config_contents.append(f"WorkshopItems={self.workshop_string} \n")
+        if not updated_mods:
+            config_contents.append(f"Mods={self.ids_string} \n")
+        
         with open(self.settings.server_config_path, "w") as fh:
             fh.writelines(config_contents)
 
