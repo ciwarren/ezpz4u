@@ -20,4 +20,4 @@ dependencies = [
 ezpz4u = "pz.main:start_server"
 
 [project.urls]
-repository = "https://github.com/ciwarren/ezpz4u.git
+repository = "https://github.com/ciwarren/ezpz4u.git"
