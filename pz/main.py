@@ -70,7 +70,7 @@ async def get_stats():
 
 def start_server():
     uvicorn.run(
-        app,
+        "main:app",
         host=app_config.host,
         port=app_config.port,
         log_level="debug",
