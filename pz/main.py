@@ -63,11 +63,6 @@ def update_server(username: Annotated[str, Depends(get_current_username)]):
     if username == "admin":
         return pz.update_server()
 
-@app.get("/server/stats")
-def get_stats():
-    return pz.get_stats_server()    
-
-
 def start_server():
     uvicorn.run(
         app,
